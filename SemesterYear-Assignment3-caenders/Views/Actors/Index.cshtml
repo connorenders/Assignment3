@@ -1,0 +1,75 @@
+﻿@model IEnumerable<SemesterYear_Assignment3_caenders.Models.ActorModel>
+
+@section Scripts {
+    <script src="~/js/actor-index.js"></script>
+}
+
+<h2>Actors</h2>
+
+<a asp-action="Edit" asp-route-id="" class="btn btn-primary">Create Actor</a>
+
+@if (!Model.Any())
+{
+    <p>There are no actors available.</p>
+}
+else
+{
+    <table class="table" style="width: 100%;">
+        <thead>
+            <tr>
+                <th class="image-cell"></th> <!-- Image column -->
+                <th class="name-column">Name</th> <!-- Name column -->
+                <th>Gender</th>
+                <th>Birthday (Age)</th>
+                <th class="button-column">Details</th> <!-- Button column -->
+                <th class="button-column">Actions</th> <!-- Button column -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var actor in Model)
+            {
+                <tr>
+                    <td class="image-cell">
+                        @if (!string.IsNullOrEmpty(actor.Media_URL))
+                        {
+                            <img src="@actor.Media_URL" class="actor-image" />
+                        }
+                        else
+                        {
+                            <div class="actor-image"></div> <!-- Placeholder -->
+                        }
+                    </td>
+                    <td class="name-column">@actor.Name</td>
+                    <td>@actor.Gender</td>
+                    @if(actor.Birthdate != null)
+                    {
+                        <td>@actor.Birthdate (@(DateTime.Today.Year - actor.Birthdate.Value.Year))</td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    })
+                    <td class="button-column">
+                        <div class="button-group">
+                            @if (string.IsNullOrWhiteSpace(actor.IMDB_URL))
+                            {
+                                <a href="@actor.IMDB_URL" target="_blank" class="btn btn-warning disabled">IMDB</a>
+                            }
+                            else
+                            {
+                                <a href="@actor.IMDB_URL" target="_blank" class="btn btn-warning">IMDB</a>
+                            }
+                            <a asp-action="Details" asp-route-id="@actor.ID" class="btn btn-info">Details</a>
+                        </div>
+                    </td>
+                    <td class="button-column">
+                        <div class="button-group">
+                            <a asp-action="Edit" asp-route-id="@actor.ID" class="btn btn-primary">Edit</a>
+                            <a href="javascript:void(0)" onclick="deleteActor('@actor.ID')" class="btn btn-danger">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,23 @@
+﻿@model SemesterYear_Assignment3_caenders.Models.StatisticsModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+</div>
+
+<h2>Overview</h2>
+<p>This website is a simple movie and actor tracking database with the capability to generate movie reviews and tweets about actors. Written by Connor Enders for CS-391.</p>
+<ul>
+    <li><a asp-controller="Movies" asp-action="Index">Movies</a>: Browse/manage movies, use detail view to manage casting and see reviews.</li>
+    <li><a asp-controller="Actors" asp-action="Index">Actors</a>: Browse/manage actors, use detail view to see actor movies and tweets.</li>
+    <li><a asp-controller="Home" asp-action="Debug">Debug</a>: See internal debugging/configuration information</li>
+</ul>
+
+<h2>Statistics</h2>
+<ul>
+    <li><strong>Total Movies: </strong>@Model.TotalMovies</li>
+    <li><strong>Total Actors: </strong>@Model.TotalActors</li>
+</ul>

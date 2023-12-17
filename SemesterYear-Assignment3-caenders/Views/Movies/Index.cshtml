@@ -1,0 +1,60 @@
+﻿@model IEnumerable<SemesterYear_Assignment3_caenders.Models.MovieModel>
+
+@section Scripts {
+    <script src="~/js/movie-index.js"></script>
+}
+
+<h2>Movies</h2>
+
+<a asp-action="Edit" asp-route-id="" class="btn btn-primary">Create Movie</a>
+
+@if (!Model.Any())
+{
+    <p>There are no movies available.</p>
+}
+else
+{
+    <table class="table" style="width: 100%;">
+        <thead>
+            <tr>
+                <th class="image-cell"></th> <!-- Image column -->
+                <th class="title-column">Title</th> <!-- Title column -->
+                <th>Year</th>
+                <th>Genre</th>
+                <th class="button-column">Details</th> <!-- Button column -->
+                <th class="button-column">Manage</th> <!-- Button column -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var movie in Model)
+            {
+                <tr>
+                    <td class="image-cell">
+                        @if (!string.IsNullOrEmpty(movie.Media_url))
+                        {
+                            <img src="@movie.Media_url" class="movie-image" />
+                        }
+                        else
+                        {
+                            <div class="movie-image"></div> <!-- Placeholder -->
+                        }
+                    </td>
+                    <td class="title-column">@movie.Title</td>
+                    <td>@movie.Release_year</td>
+                    <td>@movie.Genre</td>
+                    <td class="button-column">
+                        <div class="button-group">
+                            <a asp-action="Details" asp-route-id="@movie.ID" class="btn btn-info">Details</a>
+                        </div>
+                    </td>
+                    <td class="button-column">
+                        <div class="button-group">
+                            <a asp-action="Edit" asp-route-id="@movie.ID" class="btn btn-primary">Edit</a>
+                            <a href="javascript:void(0)" onclick="deleteMovie('@movie.ID')" class="btn btn-danger">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

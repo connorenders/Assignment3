@@ -1,0 +1,58 @@
+﻿@model SemesterYear_Assignment3_caenders.Models.ActorModel
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<h2>@Model.Name</h2>
+
+@if (!string.IsNullOrEmpty(Model.Media_URL))
+{
+    <img src="@Model.Media_URL" class="movie-image" />
+}
+
+<div>
+    <strong>Birthday:</strong> @Model.Birthdate<br />
+    <strong>Gender:</strong> @Model.Gender<br />
+    @if (string.IsNullOrWhiteSpace(Model.IMDB_URL))
+    {
+        <a href="@Model.IMDB_URL" target="_blank" class="btn btn-warning disabled">IMDB</a>
+    }
+    else
+    {
+        <a href="@Model.IMDB_URL" target="_blank" class="btn btn-warning">IMDB</a>
+    }
+    <a asp-action="Tweets" asp-route-id="@Model.ID" class="btn btn-info">Tweets</a>
+</div>
+
+<br />
+
+<h3>Movies</h3>
+@if (Model.Movies.Count > 0)
+{
+    <table class="table" id="actorsList">
+        <thead>
+            <tr>
+                <th width="90%">Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var movie in Model.Movies)
+            {
+                <tr>
+                    <td><h4>@movie.Title</h4></td>
+                    <td>
+                        <div class="button-group">
+                            <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.ID" class="btn btn-primary">Movie Page</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No movies available</p>
+}

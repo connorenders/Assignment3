@@ -1,0 +1,59 @@
+﻿@model SemesterYear_Assignment3_caenders.Models.ActorModel
+
+@{
+    var isCreate = Model.ID == Guid.Empty;
+    ViewData["Title"] = isCreate ? "Create Actor" : "Edit Actor";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="ID" />
+    <div class="form-group">
+        <label asp-for="Name" class="control-label">Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Birthdate" class="control-label">Birthdate</label>
+        <input asp-for="Birthdate" type="date" class="form-control" />
+        <span asp-validation-for="Birthdate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Gender" class="control-label">Gender</label>
+        <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender_e>()" class="form-control"></select>
+    </div>
+    <div class="form-group">
+        <label asp-for="IMDB_URL" class="control-label">IMDB URL</label>
+        <input asp-for="IMDB_URL" class="form-control" />
+        <span asp-validation-for="IMDB_URL" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Media_URL" class="control-label">Media URL</label>
+        <input asp-for="Media_URL" id="mediaURLInput" class="form-control" />
+        <span asp-validation-for="Media_URL" class="text-danger"></span>
+    </div>
+
+    <br/>
+
+    <button type="submit" class="btn btn-primary">
+        @{
+            if (isCreate == true)
+            {
+                @("Create")
+            }
+            else
+            {
+                @("Save")
+            }
+        }
+    </button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

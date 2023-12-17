@@ -1,0 +1,100 @@
+﻿@model SemesterYear_Assignment3_caenders.Models.MovieModel
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<h2>@Model.Title</h2>
+
+@if (!string.IsNullOrEmpty(Model.Media_url))
+{
+    <img src="@Model.Media_url" class="movie-image" />
+}
+
+<div>
+    <strong>Release Year:</strong> @Model.Release_year<br />
+    <strong>Genre:</strong> @Model.Genre<br />
+    @if (string.IsNullOrWhiteSpace(Model.IMDB_url))
+    {
+        <a href="@Model.IMDB_url" target="_blank" class="btn btn-warning disabled">IMDB</a>
+    }
+    else
+    {
+        <a href="@Model.IMDB_url" target="_blank" class="btn btn-warning">IMDB</a>
+    }
+    <a asp-action="Reviews" asp-route-id="@Model.ID" class="btn btn-info">Reviews</a>
+</div>
+
+<br />
+
+<h3>Actors</h3>
+@if (Model.Actors.Count > 0)
+{
+    <table class="table" id="actorsList">
+        <thead>
+            <tr>
+                <th class="image-cell"></th>
+                <th class="title-column">Name</th>
+                <th class="button-column">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var actor in Model.Actors)
+            {
+                <tr>
+                    <td>
+                        @if (!string.IsNullOrEmpty(actor.Media_URL))
+                        {
+                            <img src="@actor.Media_URL" class="movie-image" />
+                        }
+                        else
+                        {
+                            <div class="movie-image"></div> <!-- Placeholder -->
+                        }
+                    </td>
+                    <td><h4>@actor.Name</h4></td>
+                    <td>
+                        <div class="button-group">
+                            <a asp-controller="Actors" asp-action="Details" asp-route-id="@actor.ID" class="btn btn-primary">Actor Page</a>
+                            <form asp-controller="Movies" asp-action="RemoveActorFromMovie" method="post" class="d-inline">
+                                <input type="hidden" name="movieId" value="@Model.ID" />
+                                <input type="hidden" name="actorId" value="@actor.ID" />
+                                <button type="submit" class="btn btn-danger">Remove</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No actors available</p>
+}
+
+<br/>
+
+<h3>Add Actors</h3>
+<form asp-controller="Movies" asp-action="AddActorToMovie" method="post" class="form-inline" style="display: flex; align-items: center;">
+    <input type="hidden" name="movieId" value="@Model.ID" />
+    <div class="form-group" style="margin-right: 10px;">
+        <select name="actorId" id="actorId" class="form-control">
+            @if (!Model.AvailableActors.Except(Model.Actors).Any())
+            {
+                <option value="" disabled>No available actors</option>
+            }
+            else
+            {
+                @foreach (var actor in Model.AvailableActors)
+                {
+                    if (!Model.Actors.Contains(actor))
+                    {
+                        <option value="@actor.ID">@actor.Name</option>
+                    }
+                }
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success" id="addActorButton">Add</button>
+</form>

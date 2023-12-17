@@ -1,0 +1,25 @@
+﻿@model SemesterYear_Assignment3_caenders.Models.ActorModel
+
+@{
+    ViewData["Title"] = "Tweets for " + Model.Name;
+}
+
+<div id="actorId" data-actor-id="@Model.ID"></div>
+<script src="~/js/actor-tweets.js"></script>
+
+<h2>@Model.Name - Tweets</h2>
+
+<strong id="overallSentiment">Overall Sentiment: Calculating...</strong>
+
+<table class="table" id="reviewsTable">
+    <thead>
+        <tr>
+            <th width="90%">Tweet</th>
+            <th>Analyzed Sentiment</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Reviews stream in -->
+    </tbody>
+</table>
+<center><p id="wait_lbl">People are still tweeting...</p></center>

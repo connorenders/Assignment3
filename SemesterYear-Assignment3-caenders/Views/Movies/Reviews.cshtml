@@ -1,0 +1,25 @@
+﻿@model SemesterYear_Assignment3_caenders.Models.MovieModel
+
+@{
+    ViewData["Title"] = "Reviews for " + Model.Title;
+}
+
+<div id="movieId" data-movie-id="@Model.ID"></div>
+<script src="~/js/movie-reviews.js"></script>
+
+<h2>@Model.Title - Reviews</h2>
+
+<strong id="overallSentiment">Overall Sentiment: Calculating...</strong>
+
+<table class="table" id="reviewsTable">
+    <thead>
+        <tr>
+            <th width="90%">Review</th>
+            <th>Analyzed Sentiment</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Reviews stream in -->
+    </tbody>
+</table>
+<center><p id="wait_lbl">Reviewers are still reviewing...</p></center>

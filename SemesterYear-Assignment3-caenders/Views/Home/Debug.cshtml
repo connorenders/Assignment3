@@ -1,0 +1,24 @@
+﻿@model SemesterYear_Assignment3_caenders.Models.DebuggingModel
+
+@{
+    ViewData["Title"] = "Debug";
+}
+
+<h1>Debug Values</h1>
+<table class="table" style="width: 100%;">
+    <thead>
+        <tr>
+            <th>Variable</th>
+            <th width="75%">Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ((string variable, string value) in Model.debug_variables)
+        {
+            <tr>
+                <td>@variable</td>
+                <td>@value</td>
+            </tr>
+        }
+    </tbody>
+</table>
